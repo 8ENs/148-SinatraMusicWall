@@ -1,12 +1,14 @@
 <a href="/tracks/new">List your favourite song...</a>
 
-<% @tracks.each do |track| %>
+<% @tracks.each do |track_row| %>
   <div class="track">
-    <h3><a href="/tracks/<%= track.id %>"><%= track.song %></a> <small>(posted by: <%= track.fan %>)</small>
+    <h3><a href="/tracks/<%= track_row.id %>"><%= track_row.song %></a> <small>(posted by: <%= User.find(track_row.user_id).name %>)</small>
       <!-- only display if url field exists -->
-      <% unless track.url.to_s.empty? %>
-        <a href="<%= track.url %>" target="_blank"><span style="font-size: 12px">(video)</span></a>
+      <% unless track_row.url.to_s.empty? %>
+        <a href="<%= track_row.url %>" target="_blank"><span style="font-size: 12px">(video)</span></a>
       <% end %>
     </h3>
   </div>
 <% end %>
+
+<a href="/users">View list of users...</a>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150518181452) do
+ActiveRecord::Schema.define(version: 20150518200142) do
 
   create_table "tracks", force: true do |t|
     t.string   "song"
@@ -19,7 +19,16 @@ ActiveRecord::Schema.define(version: 20150518181452) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "url"
-    t.string   "fan"
+    t.integer  "user_id"
+  end
+
+  add_index "tracks", ["user_id"], name: "index_tracks_on_user_id"
+
+  create_table "users", force: true do |t|
+    t.string   "name"
+    t.string   "email"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end
