@@ -1,7 +1,7 @@
 <h1><%= @track.song %>
   <!-- only display if url field exists -->
   <% unless @track.url.to_s.empty? %>
-    <a href="<%= @track.url %>" target="_blank"><small>(video)</small></a>
+    <a href="<%= @track.url %>" target="_blank"><span style="font-size: 15px">(video)</span></a>
   <% end %>
 </h1>
 

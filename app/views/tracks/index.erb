@@ -5,7 +5,7 @@
     <h3><a href="/tracks/<%= track.id %>"><%= track.song %></a> <small>(posted by: <%= track.fan %>)</small>
       <!-- only display if url field exists -->
       <% unless track.url.to_s.empty? %>
-        <a href="<%= track.url %>" target="_blank"><small>(video)</small></a>
+        <a href="<%= track.url %>" target="_blank"><span style="font-size: 12px">(video)</span></a>
       <% end %>
     </h3>
   </div>
