@@ -1,0 +1,12 @@
+<a href="/tracks/new">List your favourite song...</a>
+
+<% @tracks.each do |track| %>
+  <div class="track">
+    <h3><a href="/tracks/<%= track.id %>"><%= track.song %></a> <small>(posted by: <%= track.fan %>)</small>
+      <!-- only display if url field exists -->
+      <% unless track.url.to_s.empty? %>
+        <a href="<%= track.url %>" target="_blank"><small>(video)</small></a>
+      <% end %>
+    </h3>
+  </div>
+<% end %>
