@@ -1,5 +1,6 @@
 class Track < ActiveRecord::Base
   belongs_to :user
+  has_many :votes
   
   validates :song, :album, :artist, presence: true
   validate  :legit_url

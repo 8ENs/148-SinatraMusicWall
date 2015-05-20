@@ -1,6 +1,6 @@
-class User < ActiveRecord::Base
-  has_many :tracks
-  has_many :votes
+class Vote < ActiveRecord::Base
+  belongs_to :track
+  has_many :user
 
   validates :name, :email, :password, presence: true
   validates :email, uniqueness: true,
