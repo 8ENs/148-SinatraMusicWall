@@ -1,13 +1,14 @@
-<h1>Welcome to the Top 100</h1>
+<h1>Music Wall</h1>
 
-<% if session[:user_id] %>
-  <p>Welcome <%= "#{session[:user_name]} [user_id: #{session[:user_id]}]" %>
+<% if session[:id] %>
+  <p>Welcome <%= "#{session[:name]} [id: #{session[:id]}]" %>
     <a href="/logout">(logout)</a>
   </p>
 <% else %>
-  <p>Hey stranger...you should either <a href="/login">login</a> or <a href="/users/new">register</a></p>
+  <p>Hey stranger...you should either <a href="/login">login</a> or <a href="/users/register">register</a></p>
 <% end %>
 
-<p><a href="/tracks">View list of songs...</a></p>
+<hr/>
+<p><a href="/tracks">View list of Songs...</a></p>
 
-<p><a href="/users">View list of users...</a></p>
+<p><a href="/users">View list of Users...</a></p>

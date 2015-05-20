@@ -8,9 +8,9 @@ get '/users' do
   erb :'users/index'
 end
 
-get '/users/new' do
+get '/users/register' do
   @user = User.new
-  erb :'users/new'
+  erb :'users/register'
 end
 
 get '/users/:id' do
@@ -21,12 +21,15 @@ end
 post '/users' do
   @user = User.new(
     name:   params[:user_name],
-    email:  params[:user_email]
+    email:  params[:user_email],
+    password:  params[:user_password]
   )
   if @user.save
-    redirect '/users'
+    session[:id] = @user.id
+    session[:name] = @user.name
+    redirect '/'
   else
-    erb :'users/new'
+    erb :'users/register'
   end
 end
 
@@ -36,40 +39,39 @@ get '/login' do
 end
 
 get '/logout' do
-  # session[:user_email] = ""  
   session.destroy
   redirect '/'
 end
 
 post '/login' do
-  # @user = User.where(name: params[:user_name], email: params[:user_email]).first
-  @user = User.find_by(name: params[:user_name], email: params[:user_email])
+  @user = User.find_by(email: params[:user_email], password: params[:user_password])
   # @user = User.find_by_email(params[:user_email])
 
   if @user
     # authenticate
-    session[:user_id] = @user.id
-    session[:user_name] = @user.name
+    session[:id] = @user.id
+    session[:name] = @user.name
     redirect '/'
   else
     @user = User.new
     @user.errors[:email] << "Login failed. Please try again."
+    # @messages[:email] << "Login failed. Please try again."
     erb :'login'
   end
 end
 
-# if session[:email] != ""
-#   @current_user = User.find_by_email(session[:email])
+# if session[:id] != ""
+#   @current_user = User.find_by(id: session[:id])
 # end
 
 # helpers do
 #   def user_logged_in?
-#     session[:email] && session[:email] != ""
+#     session[:id] && session[:id] != ""
 #   end
 
 #   def get_current_user
 #     if user_logged_in?
-#       User.find_by_email(session[:email])
+#       User.find_by(id: session[:id])
 #     end
 #   end
 # end
@@ -86,7 +88,6 @@ end
 
 get '/tracks/new' do
   @track = Track.new
-  # @track.user = User.new
   erb :'tracks/new'
 end
 
@@ -102,11 +103,8 @@ post '/tracks' do
     artist:   params[:artist],
     url:   params[:url]
   )
-  # @track.user = User.new(
-  #   name: params[:user_name],
-  #   email: params[:user_email]
-  # )
-  if @track.save # && @track.user.save
+  @track.user_id = session[:id]
+  if @track.save
     redirect '/tracks'
   else
     erb :'tracks/new'

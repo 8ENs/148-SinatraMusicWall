@@ -11,15 +11,17 @@
 
 <form method="post" action="/login">
   <div>
-    <label>User name:</label>
-    <input type="text" name="user_name" value="<%= @user.name %>">
+    <label>Email:</label>
+    <input type="text" name="user_email" value="<%= @user.email %>">
   </div>
   <div>
-    <label>User email:</label>
-    <input type="text" name="user_email" value="<%= @user.email %>">
+    <label>Password:</label>
+    <input type="text" name="user_password" value="<%= @user.password %>">
   </div>
 
   <div>
     <input type="submit" value="Submit">
   </div>
 </form>
+
+<a href="/">Back to MAIN...</a>

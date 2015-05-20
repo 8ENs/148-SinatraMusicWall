@@ -2,5 +2,16 @@
 
 <p><%= @user.email %></p>
 
+<p><%= @user.password %></p>
+
+<p>
+  Favourite Songs (posted by):
+  <ul>
+  <% Track.where(user_id: @user.id).each do |track| %>
+    <li><a href="/tracks/<%= track.id %>"><%= track.song %></a></li>
+  <% end %>
+  </ul>
+</p>
+
 <hr/>
-<a href="/tracks">Back to all Songs</a>
+<a href="/users">Back to all Users</a>
