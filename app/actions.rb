@@ -30,24 +30,33 @@ post '/users' do
   end
 end
 
-# get '/login' do
-#   erg :'login'
-# end
+get '/login' do
+  @user = User.new
+  erb :'login'
+end
 
-# get '/logout' do
-#   session[:user_email] = ""  
-#   redirect '/'
-# end
+get '/logout' do
+  # session[:user_email] = ""  
+  session.destroy
+  redirect '/'
+end
 
-# post '/login' do
-#   @user = User.find_by_email(params[:user_email])
+post '/login' do
+  # @user = User.where(name: params[:user_name], email: params[:user_email]).first
+  @user = User.find_by(name: params[:user_name], email: params[:user_email])
+  # @user = User.find_by_email(params[:user_email])
 
-#   if @user
-#     # authenticate
-#     session[:user_email] = @user.email
-#     redirect '/'
-#   end
-# end
+  if @user
+    # authenticate
+    session[:user_id] = @user.id
+    session[:user_name] = @user.name
+    redirect '/'
+  else
+    @user = User.new
+    @user.errors[:email] << "Login failed. Please try again."
+    erb :'login'
+  end
+end
 
 # if session[:email] != ""
 #   @current_user = User.find_by_email(session[:email])
@@ -64,6 +73,10 @@ end
 #     end
 #   end
 # end
+
+# <% if user_logged_in? %>
+#   <p>Welcome <%= get_current_user.name %></p>
+# <% end %>
 
 
 get '/tracks' do

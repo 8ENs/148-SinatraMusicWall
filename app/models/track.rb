@@ -1,7 +1,8 @@
 class Track < ActiveRecord::Base
+  belongs_to :user
+  
   validates :song, :album, :artist, presence: true
   validate  :legit_url
-  belongs_to :user
 
   def legit_url
     # don't throw an error unless it's a valid url (regex) OR the url was empty
