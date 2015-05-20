@@ -82,7 +82,8 @@ end
 
 
 get '/tracks' do
-  @tracks = Track.all
+  @tracks = Track.order(likes: :desc)
+  @votes = Vote.where(user_id: session[:id])
   erb :'tracks/index'
 end
 
@@ -109,4 +110,22 @@ post '/tracks' do
   else
     erb :'tracks/new'
   end
+end
+
+post '/tracks/upvote' do
+  Vote.create(
+    user_id: session[:id],
+    track_id: params[:trackid],
+    vote: 1
+  )
+  t = Track.find(params[:trackid])
+  t.likes += 1
+  t.save
+
+  redirect '/tracks' # :back
+  # if @track.save
+  #   redirect '/tracks'
+  # else
+  #   erb :'tracks/new'
+  # end
 end
